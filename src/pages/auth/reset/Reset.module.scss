@@ -1,61 +1,26 @@
 .auth {
-  min-height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  .img {
-    animation: slide-down 0.5s ease;
+  height: calc(100vh - 88.17px - 77px);
+  margin: 2rem 1rem;
+  gap: 1rem;
+  @media screen and (min-width: 662px) {
+    height: calc(100vh - 83.17px - 77px);
   }
 
-  .form {
-    width: 35rem;
-    padding: 1.5rem;
-    animation: slide-up 0.5s ease;
-    h2 {
-      color: var(--color-danger);
-      text-align: center;
-    }
-    form {
-      input[type="text"],
-      input[type="email"],
-      input[type="password"] {
-        display: block;
-        font-size: 1.6rem;
-        font-weight: 300;
-        padding: 1rem;
-        margin: 1rem auto;
-        width: 100%;
-        border: 1px solid #777;
-        border-radius: 3px;
-        outline: none;
-      }
-      .links {
-        display: flex;
-        justify-content: space-between;
-        margin: 5px 0;
-      }
-
-      p {
-        text-align: center;
-        margin: 1rem;
-      }
-    }
-    .register {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 1rem;
-    }
+  a {
+    text-decoration: none;
   }
+}
 
-  @keyframes slide-up {
-    0% {
-      transform: translateY(-5rem);
-    }
-    100% {
-      transform: translateY(0);
-    }
+.img-container {
+  display: none;
+  animation: slide-down 0.5s linear;
+  z-index: -1;
+
+  @media screen and (min-width: 824px) {
+    display: block;
   }
   @keyframes slide-down {
     0% {
@@ -65,10 +30,53 @@
       transform: translateY(0);
     }
   }
+  img {
+    width: 400px;
+  }
 }
 
-@media screen and (max-width: 700px) {
-  .img {
-    display: none;
+.text {
+  text-align: center;
+}
+
+.link {
+  margin: 5px 0;
+  font-size: 1.1rem;
+}
+.links-container {
+  display: flex;
+  justify-content: space-between;
+  color: #555;
+}
+.form {
+  box-shadow: 3px 0px 22px 2px rgba(0, 0, 0, 0.28);
+  padding: 3rem;
+  border-radius: 5px;
+  animation: slideUp 0.5s linear;
+  width: 442px;
+
+  @keyframes slideUp {
+    0% {
+      transform: translateY(-5rem);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  h2 {
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #f18701;
+  }
+  input[type="email"] {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.7rem;
+    padding: 0.7rem 0.4rem;
+    outline: none;
+    border: 2px solid #ccc;
+  }
+  input:focus {
+    border: 2px solid #007bff;
   }
 }
