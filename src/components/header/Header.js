@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import classes from "./Header.module.scss";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useState } from "react";
-import { createPortal } from "react-dom";
+import Overlay from "../overlay/Overlay";
 import { ImCross } from "react-icons/im";
-import { useEffect } from "react";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase/config";
+import { toast } from "react-toastify";
 
 const activeLink = ({ isActive }) => {
   return isActive ? `${classes["active-link"]}` : "";
 };
 
 const Header = () => {
+  const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -34,24 +37,20 @@ const Header = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, [showMenu]);
+
+  const logoutHandler = () => {
+    signOut(auth)
+      .then(() => {
+        toast.success("Loutout Successfully...");
+        navigate("/");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
   return (
     <>
-      {showMenu &&
-        createPortal(
-          <div>
-            <div
-              style={{
-                position: "fixed",
-                width: "100%",
-                height: "100%",
-                backgroundColor: "rgba(0,0,0,0.2)",
-                zIndex: 1,
-              }}
-              onClick={hideMenu}
-            ></div>
-          </div>,
-          document.getElementById("overlay")
-        )}
+      {showMenu && <Overlay hideMenu={hideMenu} />}
       <header>
         <div className={classes.container}>
           <div>
@@ -85,6 +84,11 @@ const Header = () => {
               </li>
               <li>
                 <Link to="/order-history">My orders</Link>
+              </li>
+              <li>
+                <Link to="/" onClick={logoutHandler}>
+                  Logout
+                </Link>
               </li>
               <li>
                 <Link to="/cart">

@@ -22,7 +22,7 @@ header {
 
 .nav {
   display: none;
-  @media screen and (min-width: 662px) {
+  @media screen and (min-width: 772px) {
     display: block;
   }
 }
@@ -46,7 +46,7 @@ li a {
   top: 0;
 }
 .menu-icon {
-  @media screen and (min-width: 662px) {
+  @media screen and (min-width: 772px) {
     display: none;
   }
 }
@@ -76,7 +76,7 @@ li a {
     }
   }
 
-  @media screen and (min-width: 662px) {
+  @media screen and (min-width: 772px) {
     display: none;
   }
 }
