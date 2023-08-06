@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./Login.module.scss";
 import loginImg from "../../../assets/login.png";
 import { Link } from "react-router-dom";
@@ -12,16 +12,24 @@ import { auth } from "../../../firebase/config";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../../components/loader/Loader";
+import CustomError from "../../../components/custom-error/CustomError";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [isEmailValid, setIsEmailVlaid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorState, setErrorState] = useState({
+    isError: false,
+    errorMsg: "",
+  });
   const navigate = useNavigate();
 
   const loginSubmitHandler = (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setErrorState({ isError: false, errorMsg: "" });
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -31,22 +39,33 @@ const Login = () => {
         navigate("/");
       })
       .catch((error) => {
-        toast.error(error.message);
+        setErrorState({ isError: true, errorMsg: error.message });
         setIsLoading(false);
       });
   };
   const loginWithGoogleHandler = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const user = result.user;
-        toast.success("Loggin successfullu...");
-        navigate("/");
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
+    try {
+      const provider = new GoogleAuthProvider();
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          const user = result.user;
+          toast.success("Loggin successfully...");
+          navigate("/");
+        })
+        .catch((error) => {
+          toast.error(error.message);
+        });
+    } catch (e) {
+      toast.error("Try again later");
+    }
   };
+  useEffect(() => {
+    setIsPasswordValid(password.length >= 6);
+  }, [password]);
+  useEffect(() => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    setIsEmailVlaid(emailRegex.test(email));
+  }, [email]);
 
   return (
     <>
@@ -57,6 +76,7 @@ const Login = () => {
         </div>
         <div className={classes.form}>
           <h2>Login</h2>
+          {errorState.isError && <CustomError error={errorState.errorMsg} />}
           <form onSubmit={loginSubmitHandler}>
             <input
               type="email"
@@ -76,7 +96,15 @@ const Login = () => {
               }}
               required
             />
-            <button type="submit" className="btn btn-primary btn-block">
+            <button
+              disabled={!isEmailValid || !isPasswordValid}
+              type="submit"
+              className={`btn btn-primary btn-block ${
+                !isEmailValid || !isPasswordValid
+                  ? classes["disabled-button"]
+                  : ""
+              }`}
+            >
               Login
             </button>
             <div className={classes["links-container"]}>

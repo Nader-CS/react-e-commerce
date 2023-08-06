@@ -9,12 +9,19 @@ import { ImCross } from "react-icons/im";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { CgProfile } from "react-icons/cg";
+import { removeActiveUser } from "../../redux/slices/authSlice";
+import { ShowOnLogin, HideOnLogin } from "../showOnLogin/ShowHideLinks";
 
 const activeLink = ({ isActive }) => {
   return isActive ? `${classes["active-link"]}` : "";
 };
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const authData = useSelector((state) => state.auth);
+  console.log(authData);
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const toggleMenu = () => {
@@ -41,6 +48,7 @@ const Header = () => {
   const logoutHandler = () => {
     signOut(auth)
       .then(() => {
+        dispatch(removeActiveUser());
         toast.success("Loutout Successfully...");
         navigate("/");
       })
@@ -48,6 +56,7 @@ const Header = () => {
         toast.error(error.message);
       });
   };
+
   return (
     <>
       {showMenu && <Overlay hideMenu={hideMenu} />}
@@ -76,20 +85,45 @@ const Header = () => {
           </nav>
           <nav className={classes.nav}>
             <ul>
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-              <li>
-                <Link to="/register">Register</Link>
-              </li>
-              <li>
-                <Link to="/order-history">My orders</Link>
-              </li>
-              <li>
-                <Link to="/" onClick={logoutHandler}>
-                  Logout
+              {authData.isLoggedIn && authData.userName && (
+                <Link to="/profile" className={classes.profile}>
+                  <CgProfile className={classes["profile-icon"]} />
+                  <p>
+                    {authData.userName.charAt(0).toUpperCase() +
+                      authData.userName.slice(1)}
+                  </p>
                 </Link>
-              </li>
+              )}
+              <HideOnLogin>
+                {" "}
+                <li>
+                  <NavLink to="/login" className={activeLink}>
+                    Login
+                  </NavLink>
+                </li>
+              </HideOnLogin>
+
+              <HideOnLogin>
+                <li>
+                  <NavLink to="/register" className={activeLink}>
+                    Register
+                  </NavLink>
+                </li>
+              </HideOnLogin>
+              <ShowOnLogin>
+                <li>
+                  <NavLink to="/order-history" className={activeLink}>
+                    My orders
+                  </NavLink>
+                </li>
+              </ShowOnLogin>
+              <ShowOnLogin>
+                <li>
+                  <Link to="/" onClick={logoutHandler}>
+                    Logout
+                  </Link>
+                </li>
+              </ShowOnLogin>
               <li>
                 <Link to="/cart">
                   Cart
@@ -149,36 +183,68 @@ const Header = () => {
                 />
               </div>
               <div>
+                {authData.isLoggedIn && authData.userName && (
+                  <Link to="/profile" className={classes.profile}>
+                    <CgProfile className={classes["profile-icon"]} />
+                    <p>
+                      {authData.userName.charAt(0).toUpperCase() +
+                        authData.userName.slice(1)}
+                    </p>
+                  </Link>
+                )}
                 <ul>
                   <li>
-                    <Link to="/" onClick={hideMenu}>
+                    <NavLink to="/" onClick={hideMenu} className={activeLink}>
                       Home
-                    </Link>
+                    </NavLink>
                   </li>
                   <li>
-                    <Link to="/contact" onClick={hideMenu}>
+                    <NavLink
+                      to="/contact"
+                      onClick={hideMenu}
+                      className={activeLink}
+                    >
                       Contact
-                    </Link>
+                    </NavLink>
                   </li>
                 </ul>
               </div>
               <div>
                 <ul>
-                  <li>
-                    <Link to="/login" onClick={hideMenu}>
-                      Login
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/register" onClick={hideMenu}>
-                      Register
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/order-history" onClick={hideMenu}>
-                      My orders
-                    </Link>
-                  </li>
+                  <HideOnLogin>
+                    <li>
+                      <NavLink
+                        to="/login"
+                        onClick={hideMenu}
+                        className={activeLink}
+                      >
+                        Login
+                      </NavLink>
+                    </li>
+                  </HideOnLogin>
+                  <HideOnLogin>
+                    <li>
+                      <NavLink
+                        to="/register"
+                        onClick={hideMenu}
+                        className={activeLink}
+                      >
+                        Register
+                      </NavLink>
+                    </li>
+                  </HideOnLogin>
+                  <ShowOnLogin>
+                    <li>
+                      <NavLink
+                        to="/order-history"
+                        onClick={hideMenu}
+                        className={activeLink}
+                      >
+                        My orders
+                      </NavLink>
+                    </li>
+                  </ShowOnLogin>
+
                   <li>
                     <div className={classes["cart-items-number-mobile"]}>
                       <Link to="/cart" onClick={hideMenu}>

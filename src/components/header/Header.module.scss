@@ -60,7 +60,7 @@ li a {
   top: 0;
   left: 0;
   height: 100vh;
-  width: 50%;
+  width: 65%;
   z-index: 2;
   animation: fromLeftToRight 0.1s linear;
 
@@ -96,4 +96,28 @@ li a {
 }
 .active-link {
   border-bottom: 2px solid #f18701;
+}
+
+.profile {
+  color: white;
+  display: flex;
+  margin-right: 1rem;
+  gap: 0.5rem;
+  align-items: baseline;
+  background-color: #197bbd;
+  padding: 0.5rem;
+  border-radius: 5.5px;
+  text-decoration: none;
+  flex-wrap: wrap;
+}
+
+.profile-icon {
+  align-self: center;
+}
+@media screen and (max-width: 772px) {
+  .profile {
+    justify-content: center;
+    width: 80%;
+    margin: 1rem auto;
+  }
 }
