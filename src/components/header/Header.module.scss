@@ -1,4 +1,4 @@
-header {
+.header {
   width: 100%;
   background: #1e2d24;
 }
@@ -98,7 +98,8 @@ li a {
   border-bottom: 2px solid #f18701;
 }
 
-.profile {
+.profile,
+.admin {
   color: white;
   display: flex;
   margin-right: 1rem;
@@ -109,13 +110,19 @@ li a {
   border-radius: 5.5px;
   text-decoration: none;
   flex-wrap: wrap;
+  transition: all 0.18s ease-in-out;
+  &:hover {
+    background-color: rgba(25, 123, 189, 0.4);
+  }
 }
 
-.profile-icon {
+.profile-icon,
+.admin-icon {
   align-self: center;
 }
 @media screen and (max-width: 772px) {
-  .profile {
+  .profile,
+  .admin {
     justify-content: center;
     width: 80%;
     margin: 1rem auto;

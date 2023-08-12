@@ -1,0 +1,118 @@
+.slider {
+  height: 90vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.arrow {
+  top: 50%;
+  background-color: white;
+  color: #084887;
+  border-radius: 50%;
+  position: absolute;
+  cursor: pointer;
+  z-index: 2;
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    color: #197bbd;
+    background-color: #565254;
+  }
+}
+
+.left {
+  left: 1.5rem;
+  animation: leftArrowAnimation 0.5s linear infinite alternate;
+  @keyframes leftArrowAnimation {
+    0% {
+      left: 2.1rem;
+    }
+    100% {
+      right: 1.5rem;
+    }
+  }
+}
+
+.right {
+  right: 1.5rem;
+  animation: rightArrowAnimation 0.5s linear infinite alternate;
+  @keyframes rightArrowAnimation {
+    0% {
+      right: 2.1rem;
+    }
+    100% {
+      right: 1.5rem;
+    }
+  }
+}
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  display: none;
+  @media screen and (min-width: 772px) {
+    width: 100%;
+  }
+}
+
+.current {
+  transform: translateX(0);
+  display: block;
+}
+
+.slider-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  width: 50%;
+  text-align: center;
+  transform: translateX(-50%);
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.65);
+  color: white;
+  box-shadow: 1px 2px 18px 3px rgba(0, 0, 0, 0.75);
+  font-size: 1.2rem;
+  animation: fromBottomToTop 0.7s ease-in-out;
+  @keyframes fromBottomToTop {
+    0% {
+      opacity: 0.4;
+      top: 50%;
+    }
+
+    100% {
+      opacity: 1;
+      top: 35%;
+    }
+  }
+
+  @media screen and (max-width: 824px) {
+    width: 70%;
+  }
+  h2 {
+    margin-bottom: 0.7rem;
+  }
+  .hor-line {
+    width: 50%;
+    margin: 0.7rem auto;
+  }
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+  padding: 0.6rem 4rem;
+  background-color: #197bbd;
+  display: inline-block;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+  border-radius: 3px;
+}
+.link:hover {
+  background-color: rgba(25, 123, 189, 0.4);
+}

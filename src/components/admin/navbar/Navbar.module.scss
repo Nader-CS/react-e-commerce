@@ -1,0 +1,69 @@
+.container {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.navbar-haeader {
+  height: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  background-color: #00a7e1;
+  position: relative;
+}
+.profile-icon,
+.profile-name {
+  color: white;
+}
+.profile-name {
+  text-transform: capitalize;
+  font-size: 1.05rem;
+}
+
+.nav {
+  padding-top: 0;
+  ul {
+    list-style: none;
+    display: block;
+  }
+  li {
+    padding: 0.7rem 1rem;
+    border-bottom: 1.5px solid gainsboro;
+    position: relative;
+    a {
+      color: black;
+      display: block;
+    }
+  }
+}
+.main-container {
+  height: 100%;
+  border-right: 1px solid gainsboro;
+}
+.active-link {
+  text-align: right;
+  font-weight: bold;
+  color: #8980f5 !important;
+}
+.active-link::before {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 100%;
+  top: 0;
+  right: 0;
+  background-color: #3d52d5;
+}
+.close-navbar {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  cursor: pointer;
+  color: white;
+  transition: all 0.2s ease-in-out;
+}
+.close-navbar:hover {
+  color: red;
+}

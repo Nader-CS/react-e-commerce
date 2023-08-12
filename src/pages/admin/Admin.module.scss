@@ -1,0 +1,36 @@
+.admin {
+  display: flex;
+
+  .navbar {
+    width: 20%;
+    min-height: 80vh;
+    @media screen and (max-width: 900px) {
+      width: 40%;
+    }
+  }
+  .content {
+    width: 80%;
+    padding: 1rem;
+    @media screen and (max-width: 900px) {
+      width: 60%;
+    }
+  }
+}
+.show-nav {
+  position: fixed;
+  top: 50%;
+  cursor: pointer;
+  color: #00a7e1;
+  animation: fromLeftToRight alternate 0.5s infinite;
+  @keyframes fromLeftToRight {
+    0% {
+      left: 1rem;
+    }
+    100% {
+      left: 0;
+    }
+  }
+}
+.full-width {
+  width: 100% !important;
+}

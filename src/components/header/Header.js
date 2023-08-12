@@ -13,6 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { CgProfile } from "react-icons/cg";
 import { removeActiveUser } from "../../redux/slices/authSlice";
 import { ShowOnLogin, HideOnLogin } from "../showOnLogin/ShowHideLinks";
+import { AdminOnlyLink } from "../adminOnly/AdminOnly";
+import { MdOutlineAdminPanelSettings } from "react-icons/md";
 
 const activeLink = ({ isActive }) => {
   return isActive ? `${classes["active-link"]}` : "";
@@ -60,7 +62,7 @@ const Header = () => {
   return (
     <>
       {showMenu && <Overlay hideMenu={hideMenu} />}
-      <header>
+      <header className={classes["header"]}>
         <div className={classes.container}>
           <div>
             <Link to="/" className={classes.link}>
@@ -94,8 +96,17 @@ const Header = () => {
                   </p>
                 </Link>
               )}
+              <AdminOnlyLink>
+                <li>
+                  <NavLink to="/admin" className={classes.admin}>
+                    <MdOutlineAdminPanelSettings
+                      className={classes["admin-icon"]}
+                    />
+                    Admin
+                  </NavLink>
+                </li>
+              </AdminOnlyLink>
               <HideOnLogin>
-                {" "}
                 <li>
                   <NavLink to="/login" className={activeLink}>
                     Login
